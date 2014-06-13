@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE pages [
+    <!ELEMENT pages (page*)>
+
+    <!ELEMENT page ANY>
+    <!ATTLIST page
+        id        ID    #REQUIRED
+        type      CDATA #IMPLIED
+        arguments CDATA ""
+        menu      CDATA #IMPLIED
+        alias     CDATA #IMPLIED
+    >
+
+    <!ELEMENT list (link*, item*, nest*, list*)>
+    <!ATTLIST list
+        class  CDATA "links"
+        before CDATA #IMPLIED
+        after  CDATA #IMPLIED
+        type   CDATA #IMPLIED
+    >
+
+    <!ELEMENT link (#PCDATA)>
+    <!ATTLIST link
+        class       CDATA "link"
+        id          CDATA ""
+        src         CDATA #IMPLIED
+        url         CDATA #IMPLIED
+        href        CDATA #IMPLIED
+        text        CDATA #REQUIRED
+        before      CDATA #IMPLIED
+        after       CDATA #IMPLIED
+        type        CDATA #IMPLIED
+        domain      CDATA #IMPLIED
+        menu        CDATA #IMPLIED
+    >
+
+    <!ELEMENT item (#PCDATA)>
+    <!ATTLIST item
+        class   CDATA   "item"
+        id      CDATA   ""
+        before  CDATA   #IMPLIED
+        after   CDATA   #IMPLIED
+    >
+
+    <!ELEMENT nest ANY>
+    <!ATTLIST nest
+        class   CDATA "nest"
+        style   CDATA "margin-left: 10px;"
+    >
+]>
+
+<!--
+This XML file can contain the whole website or it can contain just the main pages.
+
+Writing it is really simple, each page can contain CDATA sections or links collections
+
+Page tags also have type and arguments attributes these are defaults for the page,
+they can be overloaded by the query.
+
+CDATA sections are outputted as they are.
+Links collections are outputted like lists of links.
+
+The example below should be self explanatory.
+-->
+
+<pages>
+    <page id="home">
+        <![CDATA[
+            This is a homepage.
+        ]]>
+    </page>
+
+    <page id="links">
+        <![CDATA[
+            This is a links collection:<br/>
+        ]]>
+        <list template="table" before="- " style="margin-left: 10px">
+            <link href="#stuff" after="~ Internal link">Stuff</link>
+            <link href="#markdown" after="~ Markdown page">Markdown</link>
+            <link href="#markdown" after="~ Markdown source page" type="raw">Markdown</link>
+            <link href="separated" after="~ Internal link but in data/" type="raw">Separated</link>
+            <link href="#separated" after="~ Separated alias'd">Separated</link>
+            <link href="http://meh.doesntexist.org" after="~ External link">meh.</link>
+        </list>
+
+        <![CDATA[<br/>
+            This is a simple list created automatically:<br/>
+        ]]>
+        <list before="# " style="margin-left: 10px">
+            <item>LOL</item>
+            <item>WTF</item>
+            <item>OMG</item>
+        </list>
+    </page>
+
+    <page id="separated" alias="#page=separated"/>
+
+    <page id="new">
+        <![CDATA[
+            The part below is fetched with an HTTP request.
+        ]]>
+
+        <include href="http://google.com"/>
+
+        <include href="data/time.php" update="true"/>
+    </page>
+
+    <page id="markdown" type="markdown"><![CDATA[
+Markdown
+===
+This is a [markdown](http://daringfireball.net/projects/markdown/) page, pretty cool eh? :D
+
+
+Have fun
+---
+With miniLOL
+    ]]></page>
+
+    <page id="stuff" type="simple">
+        <![CDATA[
+            NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER
+            NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER
+            NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER
+        ]]>
+    </page>
+</pages>
